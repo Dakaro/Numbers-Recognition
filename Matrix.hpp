@@ -3,8 +3,9 @@
 
 class Matrix{
 public:
-    int static pixel[17][17];
+    int pixel[17][17];
 
+    Matrix();
     void resetMatrix();
 };
 

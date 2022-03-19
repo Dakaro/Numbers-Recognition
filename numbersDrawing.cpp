@@ -8,6 +8,10 @@
 int main()
 {
 
+    Matrix matrix;
+
+    matrix.resetMatrix();
+
     sf::RectangleShape buttonsBar( sf::Vector2f( 50, 800 ) );
     buttonsBar.setFillColor( sf::Color(100, 100, 100) );
 
@@ -38,8 +42,8 @@ int main()
                  int mouseX = int(round(sf::Mouse::getPosition(applicationWindow).x / 50));
                  int mouseY = int(round(sf::Mouse::getPosition(applicationWindow).y / 50));
 
-                 if (Matrix::pixel[mouseX][mouseY] == 0 && mouseX*50 >= 50 ) {
-                     Matrix::pixel[mouseX][mouseY] = 1;
+                 if (matrix.pixel[mouseX][mouseY] == 0 && mouseX*50 >= 50 ) {
+                     matrix.pixel[mouseX][mouseY] = 1;
                      Sprite.setPosition(mouseX * 50, mouseY * 50);
                      Sprite.setFillColor( sf::Color((mouseX*50)%255, 34, 98));
                  }
@@ -67,7 +71,7 @@ int main()
         /* I don't use inheritance, because I have only two buttons */
 
         if( resetButton.buttonPressed() ){
-            Matrix::resetMatrix();
+            matrix.resetMatrix();
             Sprite.setPosition( -100, -100 );
             applicationWindow.clear(sf::Color(255, 255, 255) );
         }
