@@ -1,103 +1,8 @@
 #include <SFML/Graphics.hpp>
 #include <cmath>
-
-bool pixel[17][17];
-
-void resetMatrix()
-{
-    for( int i=0; i < 17; ++i ){
-        for( int j = 0; j < 17; ++j )
-        {
-            pixel[i][j] = 0;
-        }
-    }
-}
-
-class Button
-{
-private:
-
-    enum BUTTON_STATES { DEFAULT = 0, ACTIVE, HOVER };
-
-    int button_state;
-
-    sf::Color activeColor;
-    sf::Color defaultColor;
-    sf::Color hoverColor;
-
-    sf::Vector2f Pos;
-    sf::Vector2f Size;
-
-    sf::CircleShape shape;
-
-public:
-
-
-
-    Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor)
-    {
-        this->Pos = Pos;
-        this->Size = Size;
-        shape = sf::CircleShape ( Size.y ) ;
-        shape.setFillColor( defaultColor );
-        shape.setPosition( Pos );
-        this->activeColor = activeColor;
-        this->defaultColor = defaultColor;
-        this->hoverColor = hoverColor;
-        button_state = DEFAULT;
-    }
-
-
-    /// Update color
-
-    void updateColor(sf::Vector2i mousePos  )
-    {
-        button_state = DEFAULT;
-        if( shape.getGlobalBounds().contains( sf::Vector2f (mousePos) ) ){
-            button_state = HOVER;
-            if( sf::Mouse::isButtonPressed( sf::Mouse::Left ) )
-            {
-                button_state = ACTIVE;
-            }
-        }
-
-        switch (button_state)
-        {
-            case DEFAULT:
-                shape.setFillColor(defaultColor);
-                break;
-
-            case ACTIVE:
-                shape.setFillColor(activeColor);
-                break;
-
-            case HOVER:
-                shape.setFillColor(hoverColor);
-                break;
-        }
-
-    }
-
-    sf::CircleShape getShape()
-    {
-        return shape;
-    }
-
-    bool buttonPressed()
-    {
-        if( button_state == ACTIVE )
-        {
-            return 1;
-        }
-        else
-        {
-            return 0;
-        }
-    }
-
-
-};
-
+#include <fstream>
+#include "Button.hpp"
+#include "Matrix.hpp"
 
 
 int main()
@@ -110,6 +15,11 @@ int main()
                      sf::Color(214, 179, 126) ,
                      sf::Color(214, 166, 53) ,
                      sf::Color(214, 173, 78)  );
+
+    Button saveButton( sf::Vector2f(4,61), sf::Vector2f(20,20) ,
+                       sf::Color(159, 200, 126) ,
+                       sf::Color(146, 200, 53) ,
+                       sf::Color(153, 200, 78)  );
 
     sf::RectangleShape Sprite( sf::Vector2f(50, 50));
     Sprite.setFillColor( sf::Color(70, 100, 70) );
@@ -128,8 +38,8 @@ int main()
                  int mouseX = int(round(sf::Mouse::getPosition(applicationWindow).x / 50));
                  int mouseY = int(round(sf::Mouse::getPosition(applicationWindow).y / 50));
 
-                 if (pixel[mouseX][mouseY] == 0 && mouseX*50 >= 50 ) {
-                     pixel[mouseX][mouseY] = 1;
+                 if (Matrix::pixel[mouseX][mouseY] == 0 && mouseX*50 >= 50 ) {
+                     Matrix::pixel[mouseX][mouseY] = 1;
                      Sprite.setPosition(mouseX * 50, mouseY * 50);
                      Sprite.setFillColor( sf::Color((mouseX*50)%255, 34, 98));
                  }
@@ -147,7 +57,9 @@ int main()
 
         applicationWindow.draw(buttonsBar);
         applicationWindow.draw(resetButton.getShape());
+        applicationWindow.draw(saveButton.getShape());
         resetButton.updateColor( sf::Mouse::getPosition(applicationWindow) );
+        saveButton.updateColor( sf::Mouse::getPosition(applicationWindow) );
         applicationWindow.draw(Sprite);
         applicationWindow.display();
 
@@ -155,9 +67,13 @@ int main()
         /* I don't use inheritance, because I have only two buttons */
 
         if( resetButton.buttonPressed() ){
-            resetMatrix();
+            Matrix::resetMatrix();
             Sprite.setPosition( -100, -100 );
             applicationWindow.clear(sf::Color(255, 255, 255) );
+        }
+
+        if( saveButton.buttonPressed() ){
+
         }
 
 
