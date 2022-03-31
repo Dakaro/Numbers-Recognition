@@ -1,18 +1,32 @@
 #include "Button.hpp"
 #include <SFML/Graphics.hpp>
 
-Button::Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor)
+Button::Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor )
 {
 this->Pos = Pos;
 this->Size = Size;
+
 shape = sf::CircleShape ( Size.y ) ;
 shape.setFillColor( defaultColor );
 shape.setPosition( Pos );
+
 this->activeColor = activeColor;
 this->defaultColor = defaultColor;
 this->hoverColor = hoverColor;
+
+/*
+this->text.setString(text);
+this->text.setCharacterSize(14);
+this->text.setFillColor(sf::Color::Black);
+this->text.setPosition(50, 50);
+this->font.loadFromFile("fonts//arial.ttf");
+this->text.setFont(this->font);
+ */
+
 button_state = DEFAULT;
 }
+
+Button::Button(){};
 
 Button::~Button(){}
 
@@ -54,11 +68,11 @@ bool Button::buttonPressed()
 {
     if( button_state == ACTIVE )
     {
-        return 1;
+        return true;
     }
     else
     {
-        return 0;
+        return false;
     }
 }
 

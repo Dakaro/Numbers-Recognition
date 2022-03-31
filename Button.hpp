@@ -2,6 +2,7 @@
 #define NUMBERSRECOGNITION_BUTTON_HPP
 
 #include <SFML/Graphics.hpp>
+#include <cstring>
 
 class Button
 {
@@ -18,10 +19,14 @@ private:
     sf::Vector2f Pos;
     sf::Vector2f Size;
 
+    sf::Text text;
+    sf::Font font;
+
     sf::CircleShape shape;
 
 public:
 
+    Button();
     Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor);
     ~Button();
     void updateColor(sf::Vector2i mousePos  );
