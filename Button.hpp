@@ -19,19 +19,20 @@ private:
     sf::Vector2f Pos;
     sf::Vector2f Size;
 
-    sf::Text text;
     sf::Font font;
+    sf::Text text = sf::Text("", font);
 
     sf::CircleShape shape;
 
 public:
 
     Button();
-    Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor);
+    Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor, std::string text = "");
     ~Button();
     void updateColor(sf::Vector2i mousePos  );
-    sf::CircleShape getShape();
+    void renderButton(sf::RenderWindow &target);
     bool buttonPressed();
+    sf::Text setText(std::string text, sf::Font setFont, int size = 0, float xPos = 0, float yPos = 0, sf::Color color = sf::Color::Black);
 };
 
 

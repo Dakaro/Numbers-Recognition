@@ -1,7 +1,8 @@
 #include "Button.hpp"
 #include <SFML/Graphics.hpp>
+#include <iostream>
 
-Button::Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor )
+Button::Button(sf::Vector2f Pos, sf::Vector2f Size,sf::Color activeColor,sf::Color defaultColor,sf::Color hoverColor, std::string renderText)
 {
 this->Pos = Pos;
 this->Size = Size;
@@ -14,14 +15,17 @@ this->activeColor = activeColor;
 this->defaultColor = defaultColor;
 this->hoverColor = hoverColor;
 
-/*
-this->text.setString(text);
-this->text.setCharacterSize(14);
-this->text.setFillColor(sf::Color::Black);
-this->text.setPosition(50, 50);
-this->font.loadFromFile("fonts//arial.ttf");
-this->text.setFont(this->font);
- */
+    if( !font.loadFromFile("fonts/FredokaOne-Regular.ttf") ){
+        std::cout << "NIE ZALADOWANO" << std::endl;
+    }
+    else{
+        std::cout << "udalo sie" << std::endl;
+    }
+
+this->text.setFont(font);
+this->text.setString(renderText);
+this->text.setFillColor(sf::Color(70, 70, 70));
+
 
 button_state = DEFAULT;
 }
@@ -29,6 +33,7 @@ button_state = DEFAULT;
 Button::Button(){};
 
 Button::~Button(){}
+
 
 
 void Button::updateColor(sf::Vector2i mousePos  )
@@ -59,9 +64,17 @@ void Button::updateColor(sf::Vector2i mousePos  )
 
 }
 
-sf::CircleShape Button::getShape()
+void Button::renderButton(sf::RenderWindow &target)
 {
-    return shape;
+
+    target.draw(shape);
+
+    sf::Text renderText;
+    renderText.setString(this->text.getString());
+    renderText.setFont(font);
+    renderText.setFillColor(this->text.getFillColor());
+    renderText.setPosition(this->Pos.x + 5, this->Pos.y - 5);
+    target.draw(renderText);
 }
 
 bool Button::buttonPressed()
@@ -76,3 +89,11 @@ bool Button::buttonPressed()
     }
 }
 
+
+sf::Text Button::setText(std::string text, sf::Font setFont, int size, float xPos, float yPos, sf::Color color) {
+    sf::Text renderText{text, setFont};
+    renderText.setPosition(xPos, yPos);
+    renderText.setFillColor(color);
+    renderText.setCharacterSize(size);
+    return renderText;
+}
