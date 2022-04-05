@@ -10,22 +10,22 @@ MainState::MainState(){
 
     // reset button
      resetButton = Button(sf::Vector2f(4,7), sf::Vector2f(16,16) ,
-                       sf::Color(214, 179, 126) ,
-                       sf::Color(214, 166, 53) ,
-                       sf::Color(214, 173, 78), "R"  );
+                       sf::Color(30, 80, 98) ,
+                       sf::Color(30, 34, 98) ,
+                       sf::Color(30, 70, 98), "R"  );
 
     // save button
     saveButton = Button ( sf::Vector2f(4,45), sf::Vector2f(16,16) ,
-                       sf::Color(159, 200, 126) ,
-                       sf::Color(146, 200, 53) ,
-                       sf::Color(153, 200, 78) ,  "S" );
+                       sf::Color(60, 80, 98) ,
+                       sf::Color(60, 34, 98) ,
+                       sf::Color(60, 70, 98) ,  "S" );
 
     // number select button
     for( int i = 0; i < 10; ++i ){
         numberButton[i] = Button ( sf::Vector2f(6,55 + (32 * (i+1) ) ), sf::Vector2f(14,14) ,
-                                   sf::Color(59, 32 * (i+1), 126) ,
-                                   sf::Color(46, 32 * (i+1), 53) ,
-                                   sf::Color(53, 32 * (i+1), 78), std::to_string(i));
+                                   sf::Color(32*(i+1), 80, 98) ,
+                                   sf::Color(32*(i+1), 34, 98) ,
+                                   sf::Color(32*(i+1), 70, 98), std::to_string(i));
     }
 
     // sprite for matrix

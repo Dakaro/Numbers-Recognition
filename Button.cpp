@@ -24,7 +24,9 @@ this->hoverColor = hoverColor;
 
 this->text.setFont(font);
 this->text.setString(renderText);
-this->text.setFillColor(sf::Color(70, 70, 70));
+
+// DEFAULT BUTTON COLOR
+this->text.setFillColor(sf::Color(200, 200, 200));
 
 
 button_state = DEFAULT;
