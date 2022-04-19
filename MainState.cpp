@@ -1,6 +1,7 @@
 #include "MainState.hpp"
 #include <cmath>
 #include <iostream>
+#include "FileSaving.hpp"
 
 MainState::MainState(){
 
@@ -101,10 +102,22 @@ void MainState::run(){
             applicationWindow.clear(sf::Color(255, 255, 255) );
         }
 
-        // save button function
-        if( saveButton.buttonPressed() ){
 
+        // number button selection
+        for( int j = 0; j < 10; ++j ){
+            if( numberButton[j].buttonPressed() ) {
+                selectedNumber = j;
+                break;
+            }
         }
+
+        // save button function
+        if( saveButton.buttonPressed() && 0 <= selectedNumber ){
+            saveFile( selectedNumber, matrix );
+            selectedNumber = -1;
+        }
+
+
 
         this->render();
 
